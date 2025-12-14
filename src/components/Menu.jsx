@@ -57,13 +57,7 @@ const Menu = () => {
         </div>
       )}
 
-      {/* Menu Button */}
-      <button
-        onClick={() => setShowMenu(true)}
-        className="fixed top-8 left-8 px-6 py-3 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-lg transition transform hover:scale-110 shadow-lg z-40 md:hidden"
-      >
-        ☰ Menu
-      </button>
+
     </>
   );
 };

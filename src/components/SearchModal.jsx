@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const SearchModal = ({ showSearch, setShowSearch, setCurrentPage, addToCart }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -6,7 +6,27 @@ const SearchModal = ({ showSearch, setShowSearch, setCurrentPage, addToCart }) =
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Ref for search modal to detect clicks outside
+  const searchModalRef = useRef(null);
+
   const API_BASE = "https://newplant-9.onrender.com";
+
+  // Handle click outside search modal
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showSearch && searchModalRef.current && !searchModalRef.current.contains(event.target)) {
+        handleClose();
+      }
+    };
+
+    if (showSearch) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showSearch]);
 
   useEffect(() => {
     if (!searchTerm.trim()) {
@@ -60,7 +80,7 @@ const SearchModal = ({ showSearch, setShowSearch, setCurrentPage, addToCart }) =
     <>
       {showSearch && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center pt-20 p-4">
-          <div className="w-full max-w-2xl bg-[#071018] border-2 border-green-600 rounded-3xl shadow-2xl overflow-hidden">
+          <div ref={searchModalRef} className="w-full max-w-2xl bg-[#071018] border-2 border-green-600 rounded-3xl shadow-2xl overflow-hidden">
             <div className="flex items-center gap-4 p-6 bg-green-900/20 border-b border-green-700">
               <input
                 type="text"

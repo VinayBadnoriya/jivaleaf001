@@ -61,7 +61,7 @@ const Notifications = ({ onClose }) => {
   }, []);
 
   return (
-    <div className="absolute top-16 right-0 w-80 md:w-96 bg-[#071018] border-2 border-green-700 rounded-lg shadow-2xl z-50 overflow-hidden flex flex-col max-h-[80vh]">
+    <div className="fixed top-20 right-4 left-4 md:absolute md:top-14 md:right-0 md:left-auto md:w-96 bg-[#071018] border-2 border-green-700 rounded-lg shadow-2xl z-50 overflow-hidden flex flex-col max-h-[70vh] md:max-h-[80vh]">
       <div className="p-4 border-b border-green-800 bg-green-900/30 flex justify-between items-center">
         <h3 className="text-white font-bold text-lg">🔔 Notifications</h3>
         <div className="flex gap-2">

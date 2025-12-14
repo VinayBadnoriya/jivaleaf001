@@ -8,7 +8,7 @@ const CTA = () => {
           Ready to Green Your Space? 🌱
         </h2>
         <p className="text-xl text-gray-300 mb-8">
-          Join thousands of happy plant parents who've transformed their homes. 
+          Join thousands of happy plant parents who've transformed their homes.
           Start your plant journey today!
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

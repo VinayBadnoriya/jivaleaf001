@@ -22,21 +22,21 @@ const Gallery = ({ setCurrentPage }) => {
           @keyframes fadeInGallery { from { opacity: 0; transform: translateY(6px) scale(.995); } to { opacity: 1; transform: translateY(0) scale(1); } }
         `}</style>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
           {galleryItems.map((item, idx) => (
             <div
               key={idx}
               onClick={() => item.page && setCurrentPage?.(item.page)}
-              className={`group relative bg-gradient-to-br from-green-900/40 to-black/50 border border-green-700 p-4 rounded-xl hover:border-green-500 hover:shadow-lg transition-transform duration-300 cursor-pointer overflow-hidden`}
+              className={`group relative bg-gradient-to-br from-green-900/40 to-black/50 border border-green-700 p-3 md:p-4 rounded-xl hover:border-green-500 hover:shadow-lg transition-transform duration-300 cursor-pointer overflow-hidden`}
               style={{ animation: `fadeInGallery 420ms ease ${idx * 80}ms both` }}
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition" style={{
                 backgroundImage: "radial-gradient(circle, #22c55e 1px, transparent 1px)",
                 backgroundSize: "20px 20px"
               }}></div>
-              <div className="text-5xl mb-2 group-hover:scale-110 transition-transform transform-gpu drop-shadow-lg">{item.emoji}</div>
-              <h3 className="text-lg font-bold mb-1">{item.title}</h3>
-              <p className="text-green-400 text-sm font-semibold">{item.count}</p>
+              <div className="text-3xl md:text-5xl mb-1 md:mb-2 group-hover:scale-110 transition-transform transform-gpu drop-shadow-lg">{item.emoji}</div>
+              <h3 className="text-sm md:text-lg font-bold mb-0.5 md:mb-1">{item.title}</h3>
+              <p className="text-green-400 text-xs md:text-sm font-semibold">{item.count}</p>
               <div className="absolute inset-0 bg-green-500/0 group-hover:bg-green-500/5 transition rounded-xl"></div>
             </div>
           ))}

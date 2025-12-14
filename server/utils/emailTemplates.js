@@ -1,27 +1,46 @@
 function getStatusEmailHTML(statusInfo, order, status) {
   return `
     <html>
-      <body style="font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 20px;">
-        <div style="max-width: 600px; margin: 0 auto; background-color: white; border: 1px solid #4CAF50; border-radius: 8px; overflow: hidden;">
-          <div style="background: linear-gradient(135deg, #071018 0%, #0b2a1a 100%); color: white; padding: 30px; text-align: center;">
-            <h1 style="color: #FFD700; margin: 0; font-size: 28px;">jeevaLeaf</h1>
-            <p style="color: #4CAF50; margin: 5px 0;">Bring life in our home 🌿</p>
+      <body style="font-family: Arial, sans-serif; background-color: #000000; margin: 0; padding: 0;">
+        <div style="max-width: 600px; margin: 20px auto; background-color: #111; border: 1px solid #22c55e; border-radius: 12px; overflow: hidden; color: #fff;">
+          
+          <!-- Header -->
+          <div style="background: linear-gradient(to bottom, #052e16, #111); padding: 30px 20px; text-align: center;">
+            <h1 style="color: #fbbf24; margin: 0; font-size: 28px; font-weight: bold; letter-spacing: 1px;">jeevaLeaf</h1>
+            <p style="color: #22c55e; margin: 5px 0 0; font-size: 14px;">Bring life in our home 🌿</p>
           </div>
+
+          <!-- Body -->
           <div style="padding: 30px;">
-            <h2 style="color: #4CAF50; margin-top: 0;">${statusInfo.subject}</h2>
-            <p style="font-size: 16px; color: #333; margin-bottom: 20px;">
-              <strong>Hello ${order.deliveryName || 'Valued Customer'},</strong><br/>
+            <h2 style="color: #22c55e; margin-top: 0; font-size: 20px;">${statusInfo.subject}</h2>
+            
+            <p style="color: #e5e5e5; font-size: 16px; margin-bottom: 20px;">
+              Hello <strong>${order.deliveryName ? order.deliveryName.split(' ')[0] : 'Customer'}</strong>,<br>
               ${statusInfo.message}
             </p>
-            <div style="background: #f9f9f9; border-left: 4px solid #FFD700; padding: 20px; margin: 20px 0; border-radius: 4px;">
-              <p style="margin: 8px 0;"><strong>Order ID:</strong> ${order._id}</p>
-              <p style="margin: 8px 0;"><strong>Status:</strong> <span style="background: #4CAF50; color: white; padding: 4px 12px; border-radius: 4px;">${String(status).toUpperCase()}</span></p>
-              <p style="margin: 8px 0;"><strong>Total:</strong> ₹${Number(order.total || 0).toFixed(2)}</p>
+
+            <!-- Details Section with Yellow Bar -->
+            <div style="border-left: 4px solid #fbbf24; padding-left: 15px; margin-bottom: 30px; margin-top: 20px;">
+              <p style="margin: 0 0 5px 0; color: #a1a1aa; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Order ID</p>
+              <p style="margin: 0 0 15px 0; color: #ffffff; font-size: 16px; font-family: monospace;">${order._id.toString().slice(-6).toUpperCase()}</p>
+              
+              <p style="margin: 0 0 5px 0; color: #a1a1aa; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Status</p>
+              <div style="margin-bottom: 15px;">
+                <span style="background-color: #22c55e; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold;">${String(status).toUpperCase()}</span>
+              </div>
+
+              <p style="margin: 0 0 5px 0; color: #a1a1aa; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Total</p>
+              <p style="margin: 0; color: #ffffff; font-size: 18px; font-weight: bold;">₹${Number(order.total || 0).toFixed(2)}</p>
             </div>
-            <p style="color: #666; font-size: 14px; margin-top: 20px;">Thank you for shopping with jeevaLeaf!</p>
+
+            <p style="color: #a1a1aa; font-size: 14px; margin-top: 30px; text-align: center;">
+              Thank you for shopping with jeevaLeaf!
+            </p>
           </div>
-          <div style="background: #f5f5f5; border-top: 1px solid #ddd; padding: 20px; text-align: center; color: #666; font-size: 12px;">
-            <p style="margin: 5px 0;">For support: <strong>support@jeevaleaf.com</strong></p>
+
+          <!-- Footer -->
+          <div style="background-color: #1a1a1a; padding: 20px; text-align: center; border-top: 1px solid #333;">
+            <p style="margin: 0; color: #666; font-size: 14px;">For support: <a href="mailto:support@jeevaleaf.com" style="color: #3b82f6; text-decoration: none;">support@jeevaleaf.com</a></p>
           </div>
         </div>
       </body>

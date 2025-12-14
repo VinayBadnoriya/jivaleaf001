@@ -20,10 +20,10 @@ const Footer = ({ setCurrentPage }) => {
           <div>
             <h4 className="font-bold text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-green-400 transition">Shop All Plants</a></li>
-              <li><a href="#" className="hover:text-green-400 transition">New Arrivals</a></li>
-              <li><a href="#" className="hover:text-green-400 transition">Best Sellers</a></li>
-              <li><a href="#" className="hover:text-green-400 transition">Plant Care Tips</a></li>
+              <li><a href="#" onClick={(e) => go('shop', e)} className="hover:text-green-400 transition">Shop All Plants</a></li>
+              <li><a href="#" onClick={(e) => go('shop', e)} className="hover:text-green-400 transition">New Arrivals</a></li>
+              <li><a href="#" onClick={(e) => go('shop', e)} className="hover:text-green-400 transition">Best Sellers</a></li>
+              <li><a href="#" onClick={(e) => go('careguides', e)} className="hover:text-green-400 transition">Plant Care Tips</a></li>
             </ul>
           </div>
 
@@ -31,10 +31,10 @@ const Footer = ({ setCurrentPage }) => {
           <div>
             <h4 className="font-bold text-lg mb-4">Customer Service</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-green-400 transition">Contact Us</a></li>
-              <li><a href="#" className="hover:text-green-400 transition">Shipping Info</a></li>
-              <li><a href="#" className="hover:text-green-400 transition">Returns & Refunds</a></li>
-              <li><a href="#" className="hover:text-green-400 transition">FAQ</a></li>
+              <li><a href="#" onClick={(e) => go('contact', e)} className="hover:text-green-400 transition">Contact Us</a></li>
+              <li><a href="#" onClick={(e) => go('about', e)} className="hover:text-green-400 transition">Shipping Info</a></li>
+              <li><a href="#" onClick={(e) => go('about', e)} className="hover:text-green-400 transition">Returns & Refunds</a></li>
+              <li><a href="#" onClick={(e) => go('about', e)} className="hover:text-green-400 transition">FAQ</a></li>
             </ul>
           </div>
 
@@ -43,8 +43,8 @@ const Footer = ({ setCurrentPage }) => {
             <h4 className="font-bold text-lg mb-4">Newsletter</h4>
             <p className="text-gray-400 text-sm mb-4">Subscribe for plant care tips and exclusive offers</p>
             <div className="flex gap-2">
-              <input 
-                type="email" 
+              <input
+                type="email"
                 placeholder="Your email"
                 className="flex-1 px-3 py-2 bg-[#0b2a1a] border border-green-700 rounded-lg text-sm outline-none focus:border-green-400"
               />

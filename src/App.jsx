@@ -17,7 +17,6 @@ import UserDetail from './pages/UserDetail';
 import Profile from './pages/Profile';
 import { Routes, Route } from 'react-router-dom';
 import Contact from "./components/Contact";
-import Menu from "./components/Menu";
 import Cart from "./components/Cart";
 import Shop from "./components/Shop";
 import About from "./components/About";
@@ -63,69 +62,69 @@ const App = () => {
   return (
     <ErrorBoundary>
       <div className="w-full bg-[#071018] text-white overflow-x-hidden">
-      {/* Gradient Background */}
-      <div 
-        className="fixed inset-0 -z-10"
-        style={{
-          background: "radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.05) 0%, transparent 50%)",
-        }}
-      />
+        {/* Gradient Background */}
+        <div
+          className="fixed inset-0 -z-10"
+          style={{
+            background: "radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.05) 0%, transparent 50%)",
+          }}
+        />
 
-      {/* All Modals and Floating Buttons */}
-      <Menu />
+        {/* All Modals and Floating Buttons */}
 
-      {/* Main Content */}
-      <Navbar setCurrentPage={setCurrentPage} setShowCart={setShowCart} cartCount={cartCount} addToCart={addToCart} />
-      <Cart
-        showCart={showCart}
-        setShowCart={setShowCart}
-        cartItems={cartItems}
-        updateQuantity={updateQuantity}
-        removeItem={removeItem}
-        setCurrentPage={setCurrentPage}
-        setPaymentOrderId={setPaymentOrderId}
-      />
+        {/* Main Content */}
+        <Navbar setCurrentPage={setCurrentPage} setShowCart={setShowCart} cartCount={cartCount} addToCart={addToCart} />
+        <Cart
+          showCart={showCart}
+          setShowCart={setShowCart}
+          cartItems={cartItems}
+          updateQuantity={updateQuantity}
+          removeItem={removeItem}
+          setCurrentPage={setCurrentPage}
+          setPaymentOrderId={setPaymentOrderId}
+        />
 
-      {/* Route-aware detail pages (orders/messages/users) */}
-      <Routes>
-        <Route path="/orders/:orderId" element={<OrderDetail />} />
-        <Route path="/messages/:messageId" element={<MessageDetail />} />
-        <Route path="/users/:userId" element={<UserDetail />} />
-        {/* Fallback route to avoid "No routes matched" warnings for app-managed routes */}
-        <Route path="*" element={<></>} />
-      </Routes>
+        {/* Route-aware detail pages (orders/messages/users) */}
+        <Routes>
+          <Route path="/orders/:orderId" element={<OrderDetail />} />
+          <Route path="/messages/:messageId" element={<MessageDetail />} />
+          <Route path="/users/:userId" element={<UserDetail />} />
+          {/* Fallback route to avoid "No routes matched" warnings for app-managed routes */}
+          <Route path="*" element={<></>} />
+        </Routes>
 
-      {currentPage === 'payment' && (
-        <>
-          <PaymentTest orderId={paymentOrderId} setCurrentPage={setCurrentPage} onPaymentSuccess={() => {
-            // clear paymentOrderId and empty cart after successful payment
-            setPaymentOrderId(null);
-            setCartItems([]);
-          }} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
-      {currentPage === 'admin' && (
-        <>
-          <AdminDashboard setCurrentPage={setCurrentPage} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
-      
-      {currentPage === "home" && (
-        <>
-          <HeroSection setCurrentPage={setCurrentPage} />
-          <section className="revealable"><TopSelling addToCart={addToCart} /></section>
-          <section className="revealable"><Gallery setCurrentPage={setCurrentPage} /></section>
-          <section className="revealable"><Features /></section>
-          <section className="revealable"><Reviews /></section>
-          <section className="revealable"><CTA /></section>
-          <section className="revealable"><Footer setCurrentPage={setCurrentPage} /></section>
-        </>
-      )}
+        {currentPage === 'payment' && (
+          <>
+            <PaymentTest orderId={paymentOrderId} setCurrentPage={setCurrentPage} onPaymentSuccess={() => {
+              // clear paymentOrderId and empty cart after successful payment
+              setPaymentOrderId(null);
+              setCartItems([]);
+            }} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
+        {currentPage === 'admin' && (
+          <>
+            <AdminDashboard setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {/* Reveal observer for sections */}
-      <script dangerouslySetInnerHTML={{ __html: `
+        {currentPage === "home" && (
+          <>
+            <HeroSection setCurrentPage={setCurrentPage} />
+            <section className="revealable"><TopSelling addToCart={addToCart} /></section>
+            <section className="revealable"><Gallery setCurrentPage={setCurrentPage} /></section>
+            <section className="revealable"><Features /></section>
+            <section className="revealable"><Reviews /></section>
+            <section className="revealable"><CTA /></section>
+            <section className="revealable"><Footer setCurrentPage={setCurrentPage} /></section>
+          </>
+        )}
+
+        {/* Reveal observer for sections */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
         (function(){
           try{
             const obs = new IntersectionObserver((entries)=>{
@@ -138,134 +137,134 @@ const App = () => {
         })();
       ` }} />
 
-      {currentPage === "shop" && (
-        <>
-          <Gallery setCurrentPage={setCurrentPage} />
-          <Features />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "shop" && (
+          <>
+            <Gallery setCurrentPage={setCurrentPage} />
+            <Features />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "about" && (
-        <>
-          <About />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "about" && (
+          <>
+            <About />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "contact" && (
-        <>
-          <Contact />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
-      {currentPage === "checkout" && (
-        <>
-          <Checkout 
-            cartItems={cartItems}
-            setCurrentPage={setCurrentPage}
-            setPaymentOrderId={setPaymentOrderId}
-            removeItem={removeItem}
-          />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "contact" && (
+          <>
+            <Contact />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
+        {currentPage === "checkout" && (
+          <>
+            <Checkout
+              cartItems={cartItems}
+              setCurrentPage={setCurrentPage}
+              setPaymentOrderId={setPaymentOrderId}
+              removeItem={removeItem}
+            />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "indoreplants" && (
-        <>
-          <IndorePlants addToCart={addToCart} setCurrentPage={setCurrentPage} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "indoreplants" && (
+          <>
+            <IndorePlants addToCart={addToCart} setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "floweringplants" && (
-        <>
-          <FloweringPlants addToCart={addToCart} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "floweringplants" && (
+          <>
+            <FloweringPlants addToCart={addToCart} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "outdoorplants" && (
-        <>
-          <OutdoorPlants addToCart={addToCart} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "outdoorplants" && (
+          <>
+            <OutdoorPlants addToCart={addToCart} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "plantersandpots" && (
-        <>
-          <PlantersAndPots addToCart={addToCart} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "plantersandpots" && (
+          <>
+            <PlantersAndPots addToCart={addToCart} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "plantcarekits" && (
-        <>
-          <PlantCareKits addToCart={addToCart} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "plantcarekits" && (
+          <>
+            <PlantCareKits addToCart={addToCart} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "careguides" && (
-        <>
-          <CareGuides />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "careguides" && (
+          <>
+            <CareGuides />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "myorders" && (
-        <>
-          <MyOrders setCurrentPage={setCurrentPage} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "myorders" && (
+          <>
+            <MyOrders setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "wishlist" && (
-        <>
-          <Wishlist setCurrentPage={setCurrentPage} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "wishlist" && (
+          <>
+            <Wishlist setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "wallet" && (
-        <>
-          <Wallet setCurrentPage={setCurrentPage} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "wallet" && (
+          <>
+            <Wallet setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === "profile" && (
-        <>
-          <Profile setCurrentPage={setCurrentPage} />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === "profile" && (
+          <>
+            <Profile setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage !== "home" && currentPage !== "contact" && currentPage !== "shop" && currentPage !== "about" && currentPage !== "checkout" && currentPage !== "indoreplants" && currentPage !== "floweringplants" && currentPage !== "outdoorplants" && currentPage !== "plantersandpots" && currentPage !== "plantcarekits" && currentPage !== "careguides" && currentPage !== "myorders" && currentPage !== "wishlist" && currentPage !== "wallet" && currentPage !== "profile" && currentPage !== "admin" && (
-        <>
-          <HeroSection setCurrentPage={setCurrentPage} />
-          <section className="revealable"><TopSelling addToCart={addToCart} /></section>
-          <section className="revealable"><Gallery setCurrentPage={setCurrentPage} /></section>
-          <section className="revealable"><Features /></section>
-          <section className="revealable"><Reviews /></section>
-          <section className="revealable"><CTA /></section>
-          <section className="revealable"><Footer setCurrentPage={setCurrentPage} /></section>
-        </>
-      )}
+        {currentPage !== "home" && currentPage !== "contact" && currentPage !== "shop" && currentPage !== "about" && currentPage !== "checkout" && currentPage !== "indoreplants" && currentPage !== "floweringplants" && currentPage !== "outdoorplants" && currentPage !== "plantersandpots" && currentPage !== "plantcarekits" && currentPage !== "careguides" && currentPage !== "myorders" && currentPage !== "wishlist" && currentPage !== "wallet" && currentPage !== "profile" && currentPage !== "admin" && (
+          <>
+            <HeroSection setCurrentPage={setCurrentPage} />
+            <section className="revealable"><TopSelling addToCart={addToCart} /></section>
+            <section className="revealable"><Gallery setCurrentPage={setCurrentPage} /></section>
+            <section className="revealable"><Features /></section>
+            <section className="revealable"><Reviews /></section>
+            <section className="revealable"><CTA /></section>
+            <section className="revealable"><Footer setCurrentPage={setCurrentPage} /></section>
+          </>
+        )}
 
-      {currentPage === 'terms' && (
-        <>
-          <Terms />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === 'terms' && (
+          <>
+            <Terms />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
 
-      {currentPage === 'privacy' && (
-        <>
-          <PrivacyPolicy />
-          <Footer setCurrentPage={setCurrentPage} />
-        </>
-      )}
+        {currentPage === 'privacy' && (
+          <>
+            <PrivacyPolicy />
+            <Footer setCurrentPage={setCurrentPage} />
+          </>
+        )}
       </div>
     </ErrorBoundary>
   );

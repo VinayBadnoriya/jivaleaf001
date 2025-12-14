@@ -38,7 +38,7 @@ const About = () => {
     const rect = el.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    el.style.transform = `rotateX(${ -y * 7 }deg) rotateY(${ x * 7 }deg) translateZ(0)`;
+    el.style.transform = `rotateX(${-y * 7}deg) rotateY(${x * 7}deg) translateZ(0)`;
   };
   const handleLeave = () => {
     const el = plantRef.current; if (!el) return; el.style.transform = '';
@@ -50,19 +50,19 @@ const About = () => {
           <h1 className="about-title"><span>About</span> Us</h1>
           <p className="about-lead">Welcome to Plants Store — a creative plant studio where every leaf tells a story. We hand-pick nursery-grown plants, perform detailed health checks, and include friendly care notes so your new green friend settles in beautifully.</p>
 
-            <div className="about-features">
-              <Feature delay="0.04s" title="Quality Plants">Hand-selected specimens from trusted growers with quality checks.</Feature>
-              <Feature delay="0.12s" title="Thoughtful Packaging">Eco-friendly packaging designed to protect plants during transit.</Feature>
-              <Feature delay="0.20s" title="Plant Support">Guides, video tips and responsive customer help to keep plants thriving.</Feature>
-            </div>
+          <div className="about-features">
+            <Feature delay="0.04s" title="Quality Plants">Hand-selected specimens from trusted growers with quality checks.</Feature>
+            <Feature delay="0.12s" title="Thoughtful Packaging">Eco-friendly packaging designed to protect plants during transit.</Feature>
+            <Feature delay="0.20s" title="Plant Support">Guides, video tips and responsive customer help to keep plants thriving.</Feature>
+          </div>
 
-            <div className="cta-row">
-              <a href="/shop" className="cta">Explore Plants</a>
-              <div className="social-icons">
-                <a href="#" aria-label="instagram" className="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z" stroke="#BFF0D8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" stroke="#BFF0D8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/><path d="M17.5 6.5h.01" stroke="#BFF0D8" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg></a>
-                <a href="#" aria-label="facebook" className="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3V2z" stroke="#BFF0D8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></a>
-              </div>
+          <div className="cta-row">
+            <a href="/shop" className="cta">Explore Plants</a>
+            <div className="social-icons">
+              <a href="#" aria-label="instagram" className="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z" stroke="#BFF0D8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" stroke="#BFF0D8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M17.5 6.5h.01" stroke="#BFF0D8" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg></a>
+              <a href="#" aria-label="facebook" className="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3V2z" stroke="#BFF0D8" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg></a>
             </div>
+          </div>
 
           <div className="about-mission">
             <h3 className="mission-title">Our Mission</h3>

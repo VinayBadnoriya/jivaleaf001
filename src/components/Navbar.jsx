@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SearchModal from "./SearchModal";
 import Notifications from "./Notifications";
 import LogoImg from "../assets/logo2.jpg";
@@ -28,6 +28,29 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
       return null;
     }
   });
+
+  // Ref for profile dropdown to detect clicks outside
+  const profileMenuRef = useRef(null);
+
+  // Handle click outside profile dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // If profile menu is open and click is outside the profile menu container
+      if (showProfileMenu && profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    // Add event listener when profile menu is open
+    if (showProfileMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showProfileMenu]);
 
   useEffect(() => {
     // keep user state in sync if localStorage changed elsewhere
@@ -109,13 +132,13 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
 
   return (
     <>
-      <nav className="w-full py-4 px-6 flex items-center justify-between bg-[#071018] text-white backdrop-blur-sm shadow-sm border-b border-green-700 sticky top-0 z-50">
+      <nav className="w-full py-3 px-4 md:px-6 flex items-center justify-between bg-[#071018] text-white backdrop-blur-sm shadow-sm border-b border-green-700 sticky top-0 z-50">
 
-        <div className="flex items-center gap-3 cursor-pointer hover:opacity-90 transition" onClick={() => setCurrentPage?.("home")}>
-          <img src={LogoImg} alt="jeevaLeaf Logo" className="h-16 w-16 rounded-full object-cover shadow-lg" />
+        <div className="flex items-center gap-2 md:gap-3 cursor-pointer hover:opacity-90 transition" onClick={() => setCurrentPage?.("home")}>
+          <img src={LogoImg} alt="jeevaLeaf Logo" className="h-12 w-12 md:h-16 md:w-16 rounded-full object-cover shadow-lg" />
           <div className="flex flex-col items-start">
-            <span className="text-2xl font-bold" style={{ color: '#E6C676' }}>JeevaLeaf</span>
-            <span className="text-xs font-semibold" style={{ color: '#E6C676' }}>Bring life in our home</span>
+            <span className="text-lg md:text-2xl font-bold" style={{ color: '#E6C676' }}>JeevaLeaf</span>
+            <span className="text-[10px] md:text-xs font-semibold hidden sm:block" style={{ color: '#E6C676' }}>Bring life in our home</span>
           </div>
         </div>
 
@@ -126,14 +149,14 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
           <li onClick={() => setCurrentPage?.("contact")} className="hover:text-green-400 cursor-pointer transition">Contact</li>
         </ul>
 
-        <div className="flex items-center gap-4">
-          <input
-            type="text"
-            placeholder="Search plants..."
+        <div className="flex items-center gap-2 md:gap-4">
+          <button
             onClick={() => setShowSearch(true)}
-            className="px-4 py-2 rounded-full bg-[#0b2a1a] border border-green-700 text-white w-40 md:w-56 outline-none focus:border-green-400 transition cursor-pointer"
-            readOnly
-          />
+            className="text-xl md:text-2xl text-white hover:text-green-400 transition"
+            title="Search plants"
+          >
+            🔍
+          </button>
 
           {user && (
             <div className="relative">
@@ -162,7 +185,7 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
           </button>
 
           {user ? (
-            <div className="relative">
+            <div className="relative" ref={profileMenuRef}>
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="flex items-center gap-2 px-3 py-2 bg-green-700 hover:bg-green-600 text-white rounded-lg transition"
@@ -174,11 +197,39 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
                     {user.name?.charAt(0).toUpperCase() || '👤'}
                   </div>
                 )}
-                {user.name}
+                <span className="hidden md:inline">{user.name}</span>
               </button>
 
               {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-64 bg-[#071018] border-2 border-green-700 rounded-lg shadow-lg z-50 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-64 bg-[#071018] border-2 border-green-700 rounded-lg shadow-lg z-50 overflow-hidden max-h-[80vh] overflow-y-auto">
+                  {/* Navigation Links - Mobile */}
+                  <div className="md:hidden bg-gradient-to-r from-green-800/30 to-green-700/30 border-b border-green-700">
+                    <button
+                      onClick={() => { setCurrentPage?.("home"); setShowProfileMenu(false); }}
+                      className="w-full text-left px-4 py-3 hover:bg-green-900/30 border-b border-green-800 text-gray-300 hover:text-green-300 transition"
+                    >
+                      🏠 Home
+                    </button>
+                    <button
+                      onClick={() => { setCurrentPage?.("shop"); setShowProfileMenu(false); }}
+                      className="w-full text-left px-4 py-3 hover:bg-green-900/30 border-b border-green-800 text-gray-300 hover:text-green-300 transition"
+                    >
+                      🛒 Shop
+                    </button>
+                    <button
+                      onClick={() => { setCurrentPage?.("about"); setShowProfileMenu(false); }}
+                      className="w-full text-left px-4 py-3 hover:bg-green-900/30 border-b border-green-800 text-gray-300 hover:text-green-300 transition"
+                    >
+                      ℹ️ About Us
+                    </button>
+                    <button
+                      onClick={() => { setCurrentPage?.("contact"); setShowProfileMenu(false); }}
+                      className="w-full text-left px-4 py-3 hover:bg-green-900/30 border-b border-green-800 text-gray-300 hover:text-green-300 transition"
+                    >
+                      📞 Contact
+                    </button>
+                  </div>
+
                   {/* Profile Section */}
                   <div className="bg-gradient-to-r from-green-900/30 to-green-800/30 p-4 border-b border-green-700">
                     <div className="flex items-center gap-3">
@@ -281,19 +332,80 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
             </div>
           ) : (
             <>
-              <button
-                onClick={() => setShowLogin(true)}
-                className="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg font-semibold transition"
-              >
-                🔐 Login
-              </button>
+              <div className="hidden md:flex gap-2">
+                <button
+                  onClick={() => setShowLogin(true)}
+                  className="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg font-semibold transition text-sm"
+                >
+                  🔐 Login
+                </button>
 
-              <button
-                onClick={() => setShowSignup(true)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-semibold transition"
-              >
-                📝 Sign Up
-              </button>
+                <button
+                  onClick={() => setShowSignup(true)}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-semibold transition text-sm"
+                >
+                  📝 Sign Up
+                </button>
+              </div>
+
+              {/* Mobile Menu for Non-Logged-In Users */}
+              <div className="md:hidden relative" ref={profileMenuRef}>
+                <button
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  className="px-3 py-2 bg-green-700 hover:bg-green-600 text-white rounded-lg transition text-sm font-semibold"
+                  aria-label="Menu"
+                >
+                  Menu
+                </button>
+
+                {showProfileMenu && (
+                  <div className="absolute right-0 mt-2 w-64 bg-[#071018] border-2 border-green-700 rounded-lg shadow-lg z-50 overflow-hidden">
+                    {/* Navigation Links */}
+                    <div className="bg-gradient-to-r from-green-800/30 to-green-700/30 border-b border-green-700">
+                      <button
+                        onClick={() => { setCurrentPage?.("home"); setShowProfileMenu(false); }}
+                        className="w-full text-left px-4 py-3 hover:bg-green-900/30 border-b border-green-800 text-gray-300 hover:text-green-300 transition"
+                      >
+                        🏠 Home
+                      </button>
+                      <button
+                        onClick={() => { setCurrentPage?.("shop"); setShowProfileMenu(false); }}
+                        className="w-full text-left px-4 py-3 hover:bg-green-900/30 border-b border-green-800 text-gray-300 hover:text-green-300 transition"
+                      >
+                        🛒 Shop
+                      </button>
+                      <button
+                        onClick={() => { setCurrentPage?.("about"); setShowProfileMenu(false); }}
+                        className="w-full text-left px-4 py-3 hover:bg-green-900/30 border-b border-green-800 text-gray-300 hover:text-green-300 transition"
+                      >
+                        ℹ️ About Us
+                      </button>
+                      <button
+                        onClick={() => { setCurrentPage?.("contact"); setShowProfileMenu(false); }}
+                        className="w-full text-left px-4 py-3 hover:bg-green-900/30 border-b border-green-800 text-gray-300 hover:text-green-300 transition"
+                      >
+                        📞 Contact
+                      </button>
+                    </div>
+
+                    {/* Auth Buttons */}
+                    <div className="p-4 space-y-2">
+                      <button
+                        onClick={() => { setShowLogin(true); setShowProfileMenu(false); }}
+                        className="w-full px-4 py-3 bg-green-600 hover:bg-green-500 text-white rounded-lg font-semibold transition"
+                      >
+                        🔐 Login
+                      </button>
+                      <button
+                        onClick={() => { setShowSignup(true); setShowProfileMenu(false); }}
+                        className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-semibold transition"
+                      >
+                        📝 Sign Up
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </>
           )}
         </div>

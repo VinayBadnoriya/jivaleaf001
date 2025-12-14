@@ -48,23 +48,22 @@ const ExploreOurScrolling = () => {
   };
 
   return (
-    <section className="px-0 py-16 bg-gradient-to-b from-transparent to-green-950/10">
-      <div className="max-w-full mx-auto px-8">
-        <h2 className="text-center text-4xl md:text-5xl font-bold mb-12">
+    <section className="px-0 py-8 md:py-16 bg-gradient-to-b from-transparent to-green-950/10">
+      <div className="max-w-full mx-auto px-4 md:px-8">
+        <h2 className="text-center text-2xl md:text-5xl font-bold mb-6 md:mb-12">
           🌿 Explore Our Indoor Collections
         </h2>
 
         {/* Main Carousel Container */}
-        <div className="relative bg-gradient-to-br from-green-900/40 to-black/50 border border-green-700 rounded-3xl overflow-hidden shadow-2xl">
+        <div className="relative bg-gradient-to-br from-green-900/40 to-black/50 border border-green-700 rounded-xl md:rounded-3xl overflow-hidden shadow-2xl">
           {/* Main Image Display - Fixed Aspect Ratio */}
           <div className="relative w-full pt-[66.67%]"> {/* 3:2 aspect ratio */}
             <div className="absolute inset-0">
               {IMAGES.map((image, idx) => (
                 <div
                   key={image.id}
-                  className={`absolute inset-0 transition-opacity duration-700 ${
-                    idx === currentIndex ? "opacity-100" : "opacity-0"
-                  }`}
+                  className={`absolute inset-0 transition-opacity duration-700 ${idx === currentIndex ? "opacity-100" : "opacity-0"
+                    }`}
                 >
                   <img
                     src={image.src}
@@ -80,7 +79,7 @@ const ExploreOurScrolling = () => {
             {/* Previous Button */}
             <button
               onClick={goToPrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all transform hover:scale-110"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-2 md:p-3 rounded-full transition-all transform hover:scale-110"
               aria-label="Previous image"
             >
               ❮
@@ -89,29 +88,28 @@ const ExploreOurScrolling = () => {
             {/* Next Button */}
             <button
               onClick={goToNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all transform hover:scale-110"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-2 md:p-3 rounded-full transition-all transform hover:scale-110"
               aria-label="Next image"
             >
               ❯
             </button>
 
             {/* Image Counter */}
-            <div className="absolute bottom-4 right-4 z-20 bg-black/60 px-4 py-2 rounded-lg text-white font-semibold text-sm">
+            <div className="absolute bottom-4 right-4 z-20 bg-black/60 px-2 py-1 md:px-4 md:py-2 rounded-lg text-white font-semibold text-xs md:text-sm">
               {currentIndex + 1} / {IMAGES.length}
             </div>
           </div>
 
           {/* Dot Controls */}
-          <div className="bg-black/30 px-8 py-4 flex justify-center gap-2 flex-wrap">
+          <div className="bg-black/30 px-4 md:px-8 py-2 md:py-4 flex justify-center gap-2 flex-wrap">
             {IMAGES.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => goToSlide(idx)}
-                className={`h-3 rounded-full transition-all duration-300 ${
-                  idx === currentIndex
-                    ? "bg-green-400 w-8"
-                    : "bg-gray-500 w-3 hover:bg-green-300"
-                }`}
+                className={`h-2 md:h-3 rounded-full transition-all duration-300 ${idx === currentIndex
+                    ? "bg-green-400 w-6 md:w-8"
+                    : "bg-gray-500 w-2 md:w-3 hover:bg-green-300"
+                  }`}
                 aria-label={`Go to image ${idx + 1}`}
               />
             ))}
@@ -119,16 +117,15 @@ const ExploreOurScrolling = () => {
 
           {/* Thumbnail Strip */}
           <div className="bg-black/50 px-4 py-3 overflow-x-auto scrollbar-hide">
-            <div className="flex gap-3 pb-2">
+            <div className="flex gap-2 md:gap-3 pb-2">
               {IMAGES.map((image, idx) => (
                 <button
                   key={image.id}
                   onClick={() => goToSlide(idx)}
-                  className={`flex-shrink-0 w-24 h-24 rounded-lg border-2 overflow-hidden transition-all duration-200 ${
-                    idx === currentIndex
+                  className={`flex-shrink-0 w-16 h-16 md:w-24 md:h-24 rounded-lg border-2 overflow-hidden transition-all duration-200 ${idx === currentIndex
                       ? "border-green-400 ring-2 ring-green-400 scale-105"
                       : "border-gray-600 hover:border-green-500 opacity-70 hover:opacity-100"
-                  }`}
+                    }`}
                 >
                   <img
                     src={image.src}
@@ -140,23 +137,23 @@ const ExploreOurScrolling = () => {
             </div>
           </div>
 
-          {/* Info Section Below Carousel */}
-          <div className="bg-gradient-to-r from-green-900/20 to-emerald-900/20 px-8 py-6 border-t border-green-700/50">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Info Section Below Carousel - Compact on Mobile */}
+          <div className="bg-gradient-to-r from-green-900/20 to-emerald-900/20 px-4 py-4 md:px-8 md:py-6 border-t border-green-700/50">
+            <div className="grid grid-cols-3 gap-2 md:gap-6">
               <div className="text-center">
-                <p className="text-3xl mb-2">🌱</p>
-                <h3 className="text-lg font-bold mb-1">Fresh Plants</h3>
-                <p className="text-gray-300 text-sm">Hand-selected & authentic</p>
+                <p className="text-xl md:text-3xl mb-1 md:mb-2">🌱</p>
+                <h3 className="text-[10px] md:text-lg font-bold mb-0.5 md:mb-1">Fresh Plants</h3>
+                <p className="text-gray-300 text-[8px] md:text-sm">Authentic</p>
               </div>
               <div className="text-center">
-                <p className="text-3xl mb-2">📦</p>
-                <h3 className="text-lg font-bold mb-1">Safe Delivery</h3>
-                <p className="text-gray-300 text-sm">Secure & packaged with care</p>
+                <p className="text-xl md:text-3xl mb-1 md:mb-2">📦</p>
+                <h3 className="text-[10px] md:text-lg font-bold mb-0.5 md:mb-1">Safe Delivery</h3>
+                <p className="text-gray-300 text-[8px] md:text-sm">Secure</p>
               </div>
               <div className="text-center">
-                <p className="text-3xl mb-2">🎯</p>
-                <h3 className="text-lg font-bold mb-1">Expert Support</h3>
-                <p className="text-gray-300 text-sm">24/7 help available</p>
+                <p className="text-xl md:text-3xl mb-1 md:mb-2">🎯</p>
+                <h3 className="text-[10px] md:text-lg font-bold mb-0.5 md:mb-1">Expert Support</h3>
+                <p className="text-gray-300 text-[8px] md:text-sm">24/7 Help</p>
               </div>
             </div>
           </div>

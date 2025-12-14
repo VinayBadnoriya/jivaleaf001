@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { formatINRFromUSD } from "../utils/priceUtils";
 import Product from "./Product";
+import SEOHead from "./SEOHead";
 
 const API_BASE = "https://newplant-9.onrender.com";
 
@@ -66,12 +67,16 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
   const currentPlant = topPlants[currentSlideIndex];
 
   return (
-    <section className="min-h-screen px-0 py-16 bg-gradient-to-b from-transparent to-green-950/10">
-      <div className="max-w-full mx-auto px-8">
+    <section className="min-h-screen px-0 py-8 md:py-16 bg-gradient-to-b from-transparent to-green-950/10">
+      <SEOHead
+        title="Indoor Plants Collection | JeevaLeaf"
+        description="Shop our premium collection of indoor plants. Fresh, healthy, and delivered to your doorstep."
+      />
+      <div className="max-w-full mx-auto px-4 md:px-8">
         <div className="mb-12 text-center">
-          <h2 className="text-5xl font-bold mb-4">🌿 Indore Plants Collection</h2>
-          <p className="text-xl text-gray-300 mb-2">Handpicked plants perfect for indoor living</p>
-          <p className="text-gray-400">Fresh & healthy plants delivered to your doorstep</p>
+          <h2 className="text-2xl md:text-5xl font-bold mb-2 md:mb-4">🌿 Indore Plants Collection</h2>
+          <p className="text-sm md:text-xl text-gray-300 mb-1 md:mb-2">Handpicked plants perfect for indoor living</p>
+          <p className="text-gray-400 text-xs md:text-base">Fresh & healthy plants delivered to your doorstep</p>
         </div>
 
         {loading && (
@@ -95,16 +100,16 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
         {!loading && !error && topPlants.length > 0 && (
           <>
             {/* Top 10 Price Scrollable Image Carousel + Detail View */}
-            <div className="mb-16 p-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700 rounded-2xl">
-              <h3 className="text-2xl font-bold mb-6 text-center">🌟 Top 10 Premium Plants</h3>
+            <div className="mb-8 md:mb-16 p-4 md:p-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700 rounded-xl md:rounded-2xl">
+              <h3 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-center">🌟 Top 10 Premium Plants</h3>
 
               {/* Carousel and Details Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
                 {/* Left: Carousel */}
                 <div className="lg:col-span-1">
                   <div className="relative overflow-hidden rounded-xl bg-black/30">
                     {/* Main carousel image */}
-                    <div className="relative h-64 md:h-80 overflow-hidden group">
+                    <div className="relative h-48 md:h-80 overflow-hidden group">
                       {currentPlant?.imageUrl && (
                         <img
                           src={currentPlant.imageUrl}
@@ -117,8 +122,8 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
 
                       {/* Plant name and price on image */}
                       <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-10">
-                        <h4 className="text-lg font-bold mb-1">{currentPlant?.name}</h4>
-                        <p className="text-green-300 font-semibold">₹{currentPlant?.salePrice}</p>
+                        <h4 className="text-sm md:text-lg font-bold mb-1">{currentPlant?.name}</h4>
+                        <p className="text-green-300 font-semibold text-sm md:text-base">₹{currentPlant?.salePrice}</p>
                       </div>
                     </div>
 
@@ -171,9 +176,9 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
                 {currentPlant && (
                   <div className="lg:col-span-2 space-y-4 transition-all duration-500">
                     <div className="transition-all duration-500">
-                      <h2 className="text-3xl font-bold mb-2 transition-all duration-500">{currentPlant.name}</h2>
+                      <h2 className="text-xl md:text-3xl font-bold mb-2 transition-all duration-500">{currentPlant.name}</h2>
                       <div className="flex items-baseline gap-3 transition-all duration-500">
-                        <p className="text-2xl font-bold text-green-400 transition-all duration-500">₹{currentPlant.salePrice}</p>
+                        <p className="text-xl md:text-2xl font-bold text-green-400 transition-all duration-500">₹{currentPlant.salePrice}</p>
                         {currentPlant.oldPrice && (
                           <p className="text-gray-500 line-through text-lg transition-all duration-500">₹{currentPlant.oldPrice}</p>
                         )}
@@ -183,7 +188,7 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
                     {/* Description */}
                     {currentPlant.description && (
                       <div className="bg-black/40 rounded-xl p-4 max-h-48 overflow-y-auto transition-all duration-500">
-                        <h3 className="text-lg font-bold mb-2 transition-all duration-500">About This Plant</h3>
+                        <h3 className="text-base md:text-lg font-bold mb-2 transition-all duration-500">About This Plant</h3>
                         <div
                           className="text-gray-300 text-sm leading-relaxed transition-all duration-500"
                           dangerouslySetInnerHTML={{
@@ -243,12 +248,12 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
 
         {/* All Plants Grid */}
         {!loading && !error && allPlants.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6 mt-12">
             {allPlants.map((p) => (
               <div
                 key={p._id}
                 onClick={() => setSelectedProduct(p)}
-                className="bg-gradient-to-br from-green-900/20 to-black/40 border border-green-700 p-6 rounded-2xl backdrop-blur-md hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition duration-300 cursor-pointer transform hover:-translate-y-1 group relative overflow-hidden"
+                className="bg-gradient-to-br from-green-900/20 to-black/40 border border-green-700 p-3 md:p-6 rounded-xl md:rounded-2xl backdrop-blur-md hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition duration-300 cursor-pointer transform hover:-translate-y-1 group relative overflow-hidden"
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition pointer-events-none" style={{
                   backgroundImage: "radial-gradient(circle, #22c55e 1px, transparent 1px)",
@@ -256,7 +261,7 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
                 }}></div>
 
                 {p.imageUrl && (
-                  <div className="w-full h-32 mb-4 rounded-lg overflow-hidden bg-gray-700 relative z-10">
+                  <div className="w-full h-24 md:h-32 mb-2 md:mb-4 rounded-lg overflow-hidden bg-gray-700 relative z-10">
                     <img
                       src={p.imageUrl}
                       alt={p.name}
@@ -265,19 +270,19 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
                   </div>
                 )}
 
-                <h3 className="text-xl font-bold mb-2 h-12 flex items-center">{p.name}</h3>
+                <h3 className="text-sm md:text-xl font-bold mb-1 md:mb-2 h-8 md:h-12 flex items-center line-clamp-2">{p.name}</h3>
 
                 {p.description && (
-                  <p className="text-gray-300 mb-4 text-sm h-20 overflow-hidden line-clamp-3">
+                  <p className="text-gray-300 mb-2 md:mb-4 text-xs md:text-sm h-10 md:h-20 overflow-hidden line-clamp-2 md:line-clamp-3 hidden md:block">
                     {p.description.replace(/<[^>]*>/g, '')}
                   </p>
                 )}
 
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-green-700/30">
+                <div className="flex items-center justify-between mt-auto pt-2 md:pt-4 border-t border-green-700/30">
                   <div>
-                    <p className="text-green-400 font-bold text-lg">₹{p.salePrice}</p>
+                    <p className="text-green-400 font-bold text-sm md:text-lg">₹{p.salePrice}</p>
                     {p.oldPrice && (
-                      <p className="text-gray-500 line-through text-sm">₹{p.oldPrice}</p>
+                      <p className="text-gray-500 line-through text-xs md:text-sm">₹{p.oldPrice}</p>
                     )}
                   </div>
                   <button
@@ -290,7 +295,7 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
                         image: p.imageUrl
                       });
                     }}
-                    className="px-3 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg font-semibold transition"
+                    className="px-2 md:px-3 py-1 md:py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg font-semibold transition text-xs md:text-sm"
                   >
                     Add
                   </button>
@@ -312,23 +317,23 @@ const IndorePlants = ({ addToCart, setCurrentPage }) => {
           </div>
         )}
 
-        <div className="mt-16 p-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700 rounded-2xl text-center">
-          <h3 className="text-2xl font-bold mb-3">Why Choose Our Indoor Plants?</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <div className="mt-6 md:mt-16 p-3 md:p-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700 rounded-lg md:rounded-2xl text-center">
+          <h3 className="text-base md:text-2xl font-bold mb-2 md:mb-3">Why Choose Our Indoor Plants?</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 mt-3 md:mt-6">
             <div>
-              <p className="text-3xl mb-2">✅</p>
-              <p className="text-gray-200 font-semibold">Healthy & Fresh</p>
-              <p className="text-gray-400 text-sm">All plants are carefully grown & inspected</p>
+              <p className="text-2xl md:text-3xl mb-1 md:mb-2">✅</p>
+              <p className="text-gray-200 font-semibold text-sm md:text-base">Healthy & Fresh</p>
+              <p className="text-gray-400 text-xs md:text-sm">All plants are carefully grown & inspected</p>
             </div>
             <div>
-              <p className="text-3xl mb-2">📦</p>
-              <p className="text-gray-200 font-semibold">Easy Delivery</p>
-              <p className="text-gray-400 text-sm">Safe packaging & quick delivery to Indore</p>
+              <p className="text-2xl md:text-3xl mb-1 md:mb-2">📦</p>
+              <p className="text-gray-200 font-semibold text-sm md:text-base">Easy Delivery</p>
+              <p className="text-gray-400 text-xs md:text-sm">Safe packaging & quick delivery to Indore</p>
             </div>
             <div>
-              <p className="text-3xl mb-2">🎯</p>
-              <p className="text-gray-200 font-semibold">Perfect Advice</p>
-              <p className="text-gray-400 text-sm">Care guides included with every order</p>
+              <p className="text-2xl md:text-3xl mb-1 md:mb-2">🎯</p>
+              <p className="text-gray-200 font-semibold text-sm md:text-base">Perfect Advice</p>
+              <p className="text-gray-400 text-xs md:text-sm">Care guides included with every order</p>
             </div>
           </div>
         </div>

@@ -17,17 +17,17 @@ const Shop = ({ addToCart }) => {
         <h2 className="text-4xl font-bold mb-6 text-center">Shop All Plants</h2>
         <p className="text-center text-gray-300 mb-12">Browse our full collection. Click a product to view details.</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {products.map((p) => (
-            <div key={p.id} className="bg-gradient-to-br from-green-900/20 to-black/40 border border-green-700 p-6 rounded-2xl backdrop-blur-md hover:border-green-500 transition cursor-pointer">
-              <div className="text-6xl mb-4">{p.emoji}</div>
-              <h3 className="text-2xl font-bold mb-2">{p.name}</h3>
-              <p className="text-gray-300 mb-4">{p.desc}</p>
-                <div className="flex items-center justify-between">
-                <p className="text-green-400 font-bold text-xl">{formatINRFromUSD(p.price)}</p>
+            <div key={p.id} className="bg-gradient-to-br from-green-900/20 to-black/40 border border-green-700 p-3 md:p-6 rounded-xl md:rounded-2xl backdrop-blur-md hover:border-green-500 transition cursor-pointer">
+              <div className="text-4xl md:text-6xl mb-2 md:mb-4">{p.emoji}</div>
+              <h3 className="text-base md:text-2xl font-bold mb-1 md:mb-2 line-clamp-2">{p.name}</h3>
+              <p className="text-gray-300 mb-2 md:mb-4 text-xs md:text-base hidden md:block">{p.desc}</p>
+              <div className="flex items-center justify-between flex-col md:flex-row gap-2">
+                <p className="text-green-400 font-bold text-sm md:text-xl">{formatINRFromUSD(p.price)}</p>
                 <button
                   onClick={() => addToCart({ id: p.id, name: p.name, price: p.price, emoji: p.emoji, currency: 'USD' })}
-                  className="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg"
+                  className="w-full md:w-auto px-3 md:px-4 py-1.5 md:py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg text-xs md:text-base font-semibold"
                 >
                   Add to Cart
                 </button>

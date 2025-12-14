@@ -10,7 +10,7 @@ export const SkeletonCard = () => (
 );
 
 export const SkeletonGrid = ({ count = 6 }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
     {Array(count).fill(0).map((_, i) => (
       <SkeletonCard key={i} />
     ))}
