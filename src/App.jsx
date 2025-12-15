@@ -32,11 +32,78 @@ import Wishlist from "./components/Wishlist";
 import Wallet from "./components/Wallet";
 import ErrorBoundary from "./components/ErrorBoundary";
 
+/* New Imports */
+import { App as CapacitorApp } from '@capacitor/app';
+
 const App = () => {
   const [currentPage, setCurrentPage] = useState("home");
+  const [pageHistory, setPageHistory] = useState(["home"]);
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [paymentOrderId, setPaymentOrderId] = useState(null);
+
+  // Handle Page Navigation with History
+  const handlePageChange = (pageOrFn) => {
+    let newPage;
+    if (typeof pageOrFn === 'function') {
+      newPage = pageOrFn(currentPage);
+    } else {
+      newPage = pageOrFn;
+    }
+
+    if (newPage === currentPage) return;
+
+    // Logic: If going to 'home', reset history. Otherwise push.
+    if (newPage === 'home') {
+      setPageHistory(['home']);
+    } else {
+      setPageHistory(prev => [...prev, newPage]);
+    }
+
+    setCurrentPage(newPage);
+    window.scrollTo(0, 0);
+  };
+
+  // Back Button Listener
+  React.useEffect(() => {
+    let isMounted = true;
+
+    const setupBackButton = async () => {
+      const listener = await CapacitorApp.addListener('backButton', ({ canGoBack }) => {
+        // 1. Close Cart if open
+        if (showCart) {
+          setShowCart(false);
+          return;
+        }
+
+        // 2. Handle Page History
+        if (pageHistory.length > 1) {
+          const newHistory = [...pageHistory];
+          newHistory.pop(); // Remove current page
+          const previousPage = newHistory[newHistory.length - 1];
+
+          setPageHistory(newHistory);
+          setCurrentPage(previousPage);
+        } else {
+          // 3. If on Home, exit. If elsewhere (and empty history), go Home.
+          if (currentPage === 'home') {
+            CapacitorApp.exitApp();
+          } else {
+            setPageHistory(['home']);
+            setCurrentPage('home');
+          }
+        }
+      });
+      return listener;
+    };
+
+    const listenerPromise = setupBackButton();
+
+    return () => {
+      isMounted = false;
+      listenerPromise.then(listener => listener.remove().catch(e => console.error(e)));
+    };
+  }, [pageHistory, currentPage, showCart]); // Re-bind when state changes to capture latest values
 
   const addToCart = (product) => {
     setCartItems((prev) => {
@@ -59,6 +126,9 @@ const App = () => {
 
   const cartCount = cartItems.reduce((s, it) => s + it.quantity, 0);
 
+  // Helper to intercept setCurrentPage calls in children
+  const exposedSetCurrentPage = handlePageChange;
+
   return (
     <ErrorBoundary>
       <div className="w-full bg-[#071018] text-white overflow-x-hidden">
@@ -73,14 +143,14 @@ const App = () => {
         {/* All Modals and Floating Buttons */}
 
         {/* Main Content */}
-        <Navbar setCurrentPage={setCurrentPage} setShowCart={setShowCart} cartCount={cartCount} addToCart={addToCart} />
+        <Navbar setCurrentPage={exposedSetCurrentPage} setShowCart={setShowCart} cartCount={cartCount} addToCart={addToCart} />
         <Cart
           showCart={showCart}
           setShowCart={setShowCart}
           cartItems={cartItems}
           updateQuantity={updateQuantity}
           removeItem={removeItem}
-          setCurrentPage={setCurrentPage}
+          setCurrentPage={exposedSetCurrentPage}
           setPaymentOrderId={setPaymentOrderId}
         />
 
@@ -95,30 +165,30 @@ const App = () => {
 
         {currentPage === 'payment' && (
           <>
-            <PaymentTest orderId={paymentOrderId} setCurrentPage={setCurrentPage} onPaymentSuccess={() => {
+            <PaymentTest orderId={paymentOrderId} setCurrentPage={exposedSetCurrentPage} onPaymentSuccess={() => {
               // clear paymentOrderId and empty cart after successful payment
               setPaymentOrderId(null);
               setCartItems([]);
             }} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
         {currentPage === 'admin' && (
           <>
-            <AdminDashboard setCurrentPage={setCurrentPage} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <AdminDashboard setCurrentPage={exposedSetCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "home" && (
           <>
-            <HeroSection setCurrentPage={setCurrentPage} />
+            <HeroSection setCurrentPage={exposedSetCurrentPage} />
             <section className="revealable"><TopSelling addToCart={addToCart} /></section>
-            <section className="revealable"><Gallery setCurrentPage={setCurrentPage} /></section>
+            <section className="revealable"><Gallery setCurrentPage={exposedSetCurrentPage} /></section>
             <section className="revealable"><Features /></section>
             <section className="revealable"><Reviews /></section>
             <section className="revealable"><CTA /></section>
-            <section className="revealable"><Footer setCurrentPage={setCurrentPage} /></section>
+            <section className="revealable"><Footer setCurrentPage={exposedSetCurrentPage} /></section>
           </>
         )}
 
@@ -139,130 +209,130 @@ const App = () => {
 
         {currentPage === "shop" && (
           <>
-            <Gallery setCurrentPage={setCurrentPage} />
+            <Gallery setCurrentPage={exposedSetCurrentPage} />
             <Features />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "about" && (
           <>
             <About />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "contact" && (
           <>
             <Contact />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
         {currentPage === "checkout" && (
           <>
             <Checkout
               cartItems={cartItems}
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={exposedSetCurrentPage}
               setPaymentOrderId={setPaymentOrderId}
               removeItem={removeItem}
             />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "indoreplants" && (
           <>
-            <IndorePlants addToCart={addToCart} setCurrentPage={setCurrentPage} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <IndorePlants addToCart={addToCart} setCurrentPage={exposedSetCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "floweringplants" && (
           <>
             <FloweringPlants addToCart={addToCart} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "outdoorplants" && (
           <>
             <OutdoorPlants addToCart={addToCart} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "plantersandpots" && (
           <>
             <PlantersAndPots addToCart={addToCart} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "plantcarekits" && (
           <>
             <PlantCareKits addToCart={addToCart} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "careguides" && (
           <>
             <CareGuides />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "myorders" && (
           <>
-            <MyOrders setCurrentPage={setCurrentPage} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <MyOrders setCurrentPage={exposedSetCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "wishlist" && (
           <>
-            <Wishlist setCurrentPage={setCurrentPage} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Wishlist setCurrentPage={exposedSetCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "wallet" && (
           <>
-            <Wallet setCurrentPage={setCurrentPage} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Wallet setCurrentPage={exposedSetCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === "profile" && (
           <>
-            <Profile setCurrentPage={setCurrentPage} />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Profile setCurrentPage={exposedSetCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage !== "home" && currentPage !== "contact" && currentPage !== "shop" && currentPage !== "about" && currentPage !== "checkout" && currentPage !== "indoreplants" && currentPage !== "floweringplants" && currentPage !== "outdoorplants" && currentPage !== "plantersandpots" && currentPage !== "plantcarekits" && currentPage !== "careguides" && currentPage !== "myorders" && currentPage !== "wishlist" && currentPage !== "wallet" && currentPage !== "profile" && currentPage !== "admin" && (
           <>
-            <HeroSection setCurrentPage={setCurrentPage} />
+            <HeroSection setCurrentPage={exposedSetCurrentPage} />
             <section className="revealable"><TopSelling addToCart={addToCart} /></section>
-            <section className="revealable"><Gallery setCurrentPage={setCurrentPage} /></section>
+            <section className="revealable"><Gallery setCurrentPage={exposedSetCurrentPage} /></section>
             <section className="revealable"><Features /></section>
             <section className="revealable"><Reviews /></section>
             <section className="revealable"><CTA /></section>
-            <section className="revealable"><Footer setCurrentPage={setCurrentPage} /></section>
+            <section className="revealable"><Footer setCurrentPage={exposedSetCurrentPage} /></section>
           </>
         )}
 
         {currentPage === 'terms' && (
           <>
             <Terms />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
 
         {currentPage === 'privacy' && (
           <>
             <PrivacyPolicy />
-            <Footer setCurrentPage={setCurrentPage} />
+            <Footer setCurrentPage={exposedSetCurrentPage} />
           </>
         )}
       </div>
