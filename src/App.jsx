@@ -34,6 +34,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 
 /* New Imports */
 import { App as CapacitorApp } from '@capacitor/app';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("home");
@@ -64,11 +65,23 @@ const App = () => {
     window.scrollTo(0, 0);
   };
 
-  // Back Button Listener
+  // Back Button Listener & Status Bar Config
   React.useEffect(() => {
     let isMounted = true;
 
-    const setupBackButton = async () => {
+    const initApp = async () => {
+      // Status Bar Config
+      try {
+        await StatusBar.setStyle({ style: Style.Dark });
+        if (window.innerWidth < 768) { // Only on mobile
+          await StatusBar.setOverlaysWebView({ overlay: true });
+          // We set overlay: true so the background extends behind the status bar,
+          // but we MUST pad the content (Navbar) to avoid overlap.
+        }
+      } catch (e) {
+        // likely not running on device
+      }
+
       const listener = await CapacitorApp.addListener('backButton', ({ canGoBack }) => {
         // 1. Close Cart if open
         if (showCart) {
@@ -97,11 +110,11 @@ const App = () => {
       return listener;
     };
 
-    const listenerPromise = setupBackButton();
+    const listenerPromise = initApp();
 
     return () => {
       isMounted = false;
-      listenerPromise.then(listener => listener.remove().catch(e => console.error(e)));
+      listenerPromise.then(listener => listener && listener.remove().catch(e => console.error(e)));
     };
   }, [pageHistory, currentPage, showCart]); // Re-bind when state changes to capture latest values
 
@@ -131,7 +144,7 @@ const App = () => {
 
   return (
     <ErrorBoundary>
-      <div className="w-full bg-[#071018] text-white overflow-x-hidden">
+      <div className="w-full bg-[#071018] text-white overflow-x-hidden pt-[env(safe-area-inset-top)]">
         {/* Gradient Background */}
         <div
           className="fixed inset-0 -z-10"

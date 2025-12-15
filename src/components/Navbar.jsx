@@ -132,7 +132,7 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
 
   return (
     <>
-      <nav className="w-full py-3 px-4 md:px-6 flex items-center justify-between bg-[#071018] text-white backdrop-blur-sm shadow-sm border-b border-green-700 sticky top-0 z-50">
+      <nav className="w-full pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-3 px-4 md:px-6 flex items-center justify-between bg-[#071018] text-white backdrop-blur-sm shadow-sm border-b border-green-700 sticky top-0 z-50">
 
         <div className="flex items-center gap-2 md:gap-3 cursor-pointer hover:opacity-90 transition" onClick={() => setCurrentPage?.("home")}>
           <img src={LogoImg} alt="jeevaLeaf Logo" className="h-12 w-12 md:h-16 md:w-16 rounded-full object-cover shadow-lg" />
