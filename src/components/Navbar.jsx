@@ -201,7 +201,7 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
               </button>
 
               {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-64 bg-[#071018] border-2 border-green-700 rounded-lg shadow-lg z-50 overflow-hidden max-h-[80vh] overflow-y-auto">
+                <div className="absolute right-0 mt-2 w-72 bg-[#071018] border-2 border-green-700 rounded-lg shadow-lg z-50 overflow-hidden max-h-[85vh] overflow-y-auto">
                   {/* Navigation Links - Mobile */}
                   <div className="md:hidden bg-gradient-to-r from-green-800/30 to-green-700/30 border-b border-green-700">
                     <button
@@ -359,7 +359,7 @@ const Navbar = ({ setCurrentPage, setShowCart, cartCount = 0, addToCart }) => {
                 </button>
 
                 {showProfileMenu && (
-                  <div className="absolute right-0 mt-2 w-64 bg-[#071018] border-2 border-green-700 rounded-lg shadow-lg z-50 overflow-hidden">
+                  <div className="absolute right-0 mt-2 w-72 bg-[#071018] border-2 border-green-700 rounded-lg shadow-lg z-50 overflow-hidden max-h-[85vh] overflow-y-auto">
                     {/* Navigation Links */}
                     <div className="bg-gradient-to-r from-green-800/30 to-green-700/30 border-b border-green-700">
                       <button

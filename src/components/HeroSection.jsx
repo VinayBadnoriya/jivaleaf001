@@ -44,7 +44,7 @@ const HeroSection = ({ setCurrentPage, heroImgOpacity = 1, accentSize = 206, acc
     <section className="w-full px-0 py-6 md:py-12 flex flex-col gap-6 md:gap-10">
       <div className="px-4 md:px-8">
         {/* Main Hero Banner */}
-        <div className="w-full bg-gradient-to-r from-green-900/40 via-emerald-900/30 to-green-900/40 border border-green-700 rounded-xl md:rounded-2xl p-4 md:p-10 shadow-2xl overflow-hidden relative h-[500px] md:h-[520px]">
+        <div className="w-full bg-gradient-to-r from-green-900/40 via-emerald-900/30 to-green-900/40 border border-green-700 rounded-xl md:rounded-2xl p-4 md:p-10 shadow-2xl overflow-hidden relative min-h-[500px] h-auto md:h-[520px]">
           {/* Accent circle (no blur) - color effect on top-right of hero; size and color controllable via props */}
           <div
             className="absolute top-0 right-0 -z-10 rounded-full"
