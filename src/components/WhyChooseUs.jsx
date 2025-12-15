@@ -39,7 +39,7 @@ const WhyChooseUs = () => {
   };
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-transparent to-green-950/10">
+    <section className="py-8 md:py-20 px-4 bg-gradient-to-b from-transparent to-green-950/10">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
           <span className="text-green-400">Why Choose</span> Us?
@@ -56,11 +56,10 @@ const WhyChooseUs = () => {
               className="cursor-pointer transform transition-all duration-300 hover:scale-105"
             >
               <div
-                className={`p-6 rounded-2xl border transition-all duration-300 ${
-                  expanded === reason.id
+                className={`p-6 rounded-2xl border transition-all duration-300 ${expanded === reason.id
                     ? 'bg-green-900/30 border-green-500 shadow-lg shadow-green-500/20'
                     : 'bg-[#07110a] border-green-800 hover:border-green-600'
-                }`}
+                  }`}
               >
                 <div className="flex items-start gap-4 mb-4">
                   <div className="text-4xl flex-shrink-0">{reason.emoji}</div>
