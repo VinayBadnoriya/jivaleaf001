@@ -90,7 +90,7 @@ const TopSelling = ({ addToCart }) => {
         </h2>
         <p className="text-center text-gray-300 mb-6 md:mb-12 text-sm md:text-lg">Choose from our premium collection of healthy, handpicked plants</p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
           {plants.map((p) => (
             <div
               key={p.id}
